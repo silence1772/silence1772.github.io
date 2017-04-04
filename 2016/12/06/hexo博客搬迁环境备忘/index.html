@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="吴泽伟" />
+
+
+
+<meta name="description" content="电脑新装了ubuntu16.04，和之前的win7组成了双系统，想要把工作环境搬迁到ubuntu上，可是我的hexo已经搭建在了win7下，无法在其他电脑上更新博文，即使我只是换了系统，可要继续之前的hexo文件夹还是太麻烦了，所以我在想能不能有一个办法即使以后换了电脑也能继续用之前的hexo博客。">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo博客搬迁环境备忘">
+<meta property="og:url" content="http://silence1772.cn/2016/12/06/hexo博客搬迁环境备忘/index.html">
+<meta property="og:site_name" content="吴泽伟">
+<meta property="og:description" content="电脑新装了ubuntu16.04，和之前的win7组成了双系统，想要把工作环境搬迁到ubuntu上，可是我的hexo已经搭建在了win7下，无法在其他电脑上更新博文，即使我只是换了系统，可要继续之前的hexo文件夹还是太麻烦了，所以我在想能不能有一个办法即使以后换了电脑也能继续用之前的hexo博客。">
+<meta property="og:updated_time" content="2017-04-04T13:06:34.282Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hexo博客搬迁环境备忘">
+<meta name="twitter:description" content="电脑新装了ubuntu16.04，和之前的win7组成了双系统，想要把工作环境搬迁到ubuntu上，可是我的hexo已经搭建在了win7下，无法在其他电脑上更新博文，即使我只是换了系统，可要继续之前的hexo文件夹还是太麻烦了，所以我在想能不能有一个办法即使以后换了电脑也能继续用之前的hexo博客。">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="吴泽伟" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon1.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>hexo博客搬迁环境备忘 | 吴泽伟</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?01c8e796d908f246a43fe2b8f0b53e25";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/头像.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">吴泽伟</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">凛冬将至。</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/tags/">分类</a></li>
+                        
+                            <li><a href="/about/">关于</a></li>
+                        
+                            <li><a href="/about/">留言</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:silence17726@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/silence1772" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa Coding" href="https://coding.net/u/silence1772" title="Coding"></a>
+                            
+                                <a class="fa QQ" href="/603497448" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BFS/">BFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DFS/">DFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/优先队列/">优先队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态规划/">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图论/">图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆栈/">堆栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数加法/">大数加法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/完全背包DP/">完全背包DP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并查集/">并查集</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/拓扑排序/">拓扑排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数论/">数论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/枚举/">枚举</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/模拟/">模拟</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/贪心/">贪心</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/递推/">递推</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">吴泽伟</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/头像.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">吴泽伟</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">凛冬将至。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/tags/">分类</a></li>
+                
+                    <li><a href="/about/">关于</a></li>
+                
+                    <li><a href="/about/">留言</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:silence17726@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/silence1772" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa Coding" target="_blank" href="https://coding.net/u/silence1772" title="Coding"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/603497448" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-hexo博客搬迁环境备忘" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/06/hexo博客搬迁环境备忘/" class="article-date">
+      <time datetime="2016-12-06T08:43:37.000Z" itemprop="datePublished">2016-12-06</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      hexo博客搬迁环境备忘
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/学习/">学习</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>电脑新装了ubuntu16.04，和之前的win7组成了双系统，想要把工作环境搬迁到ubuntu上，可是我的hexo已经搭建在了win7下，无法在其他电脑上更新博文，即使我只是换了系统，可要继续之前的hexo文件夹还是太麻烦了，所以我在想能不能有一个办法即使以后换了电脑也能继续用之前的hexo博客。</p>
+<p>于是我就上百度搜索，找到了下面这种办法：</p>
+<p>作者：CrazyMilk<br>链接：<a href="https://www.zhihu.com/question/21193762/answer/79109280" target="_blank" rel="external">https://www.zhihu.com/question/21193762/answer/79109280</a><br>来源：知乎<br>著作权归作者所有，转载请联系作者获得授权。</p>
+<p>其实，Hexo生成的文件里面是有一个.gitignore的，所以它的本意应该也是想我们把这些文件放到GitHub上存放的。但是考虑到如果每个GitHub Pages都需要额外的一个仓库存放这些文件，就显得特别冗余了。这个时候就可以用分支的思路！一个分支用来存放Hexo生成的网站原始的文件，另一个分支用来存放生成的静态网页。</p>
+<p>最近我也用GitHub Pages搭建了一个独立博客，想到了这个方法，使用之后真的特别简洁。为了更直观地说明，奉上使用这种方法不同时候的流程：</p>
+<p>———————————————————– 华丽的分割线1 ———————————————————-<br>一、关于搭建的流程</p>
+<ol>
+<li>创建仓库，<a href="http://CrazyMilk.github.io；" target="_blank" rel="external">http://CrazyMilk.github.io；</a></li>
+<li>创建两个分支：master 与 hexo；</li>
+<li>设置hexo为默认分支（因为我们只需要手动管理这个分支上的Hexo网站文件）；</li>
+<li>使用git clone git@github.com:CrazyMilk/CrazyMilk.github.io.git拷贝仓库；</li>
+<li>在本地<a href="http://CrazyMilk.github.io文件夹下通过Git" target="_blank" rel="external">http://CrazyMilk.github.io文件夹下通过Git</a> bash依次执行npm install hexo、hexo init、npm install 和 npm install hexo-deployer-git（此时当前分支应显示为hexo）;</li>
+<li>修改_config.yml中的deploy参数，分支应为master；</li>
+<li>依次执行git add .、git commit -m “…”、git push origin hexo提交网站相关的文件；</li>
+<li>执行hexo g -d生成网站并部署到GitHub上。</li>
+</ol>
+<p>这样一来，在GitHub上的<a href="http://CrazyMilk.github.io仓库就有两个分支，一个hexo分支用来存放网站的原始文件，一个master分支用来存放生成的静态网页。完美(" target="_blank" rel="external">http://CrazyMilk.github.io仓库就有两个分支，一个hexo分支用来存放网站的原始文件，一个master分支用来存放生成的静态网页。完美(</a> •̀ ω •́ )y！</p>
+<p>二、关于日常的改动流程<br>在本地对博客进行修改（添加新博文、修改样式等等）后，通过下面的流程进行管理。</p>
+<ol>
+<li>依次执行git add .、git commit -m “…”、git push origin hexo指令将改动推送到GitHub（此时当前分支应为hexo）；</li>
+<li>然后才执行hexo g -d发布网站到master分支上。</li>
+</ol>
+<p>虽然两个过程顺序调转一般不会有问题，不过逻辑上这样的顺序是绝对没问题的（例如突然死机要重装了，悲催….的情况，调转顺序就有问题了）。</p>
+<p>三、本地资料丢失后的流程<br>当重装电脑之后，或者想在其他电脑上修改博客，可以使用下列步骤：</p>
+<ol>
+<li>使用git clone git@github.com:CrazyMilk/CrazyMilk.github.io.git拷贝仓库（默认分支为hexo）；</li>
+<li>在本地新拷贝的<a href="http://CrazyMilk.github.io文件夹下通过Git" target="_blank" rel="external">http://CrazyMilk.github.io文件夹下通过Git</a> bash依次执行下列指令：npm install hexo、npm install、npm install hexo-deployer-git（记得，不需要hexo init这条指令）。</li>
+</ol>
+<h3 id="——————end——————–"><a href="#——————end——————–" class="headerlink" title="——————end——————–"></a>——————end——————–</h3><p>可是对我来说，我已经搭建好了博客，而且与github，coding相关联的仓库是blog文件夹里面的.deploy_git,并不是整个blog文件夹，根本就无法将blog中的文件push到部署网页的远程仓库里。因此我决定另外新建一个仓库 （为了方便，我只在coding中新建，意思是我的hexo博客备份文件就只放在coding中，而github好像已经被我边缘化了） 用来存放blog中的必要文件。这里要说明一下，在我的网站hexo文件夹blog中，打开git bash，输入以下命令：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git init</div><div class="line">git remote add origin https://coding.net/silence1772/hexo.git </div><div class="line">git add .</div><div class="line">git commit -m <span class="string">"1"</span></div><div class="line">git push -u origin master</div></pre></td></tr></table></figure></p>
+<p>git init 是将这个文件夹初始化，会发现多了一个.git的隐藏文件夹，用来配置仓库。</p>
+<p>git remote add origin <a href="https://coding.net/silence1772/hexo.git" target="_blank" rel="external">https://coding.net/silence1772/hexo.git</a> 这里是用来与远程仓库建立关联，需要注意的是这里使用的是https方式<br>也可以git remote add origin git@git.coding.net:silence1772/hexo.git<br>在使用Git的时候，指定远程版本库的地址有2种方式：</p>
+<p>1.使用https方式的git地址非常直接（<a href="https://xxx.oschina.net/xxx.git），基本上什么都不需要配置，不管是git" target="_blank" rel="external">https://xxx.oschina.net/xxx.git），基本上什么都不需要配置，不管是git</a> bash还是tortoisegit都能完美使用，但是每次需要连接远程服务器时，都要提示输入用户名与密码</p>
+<p>2.使用ssh方式的git地址非常爽快（git@git.oschina.net:xxxx/xxx.git），不需要输入密码，但是需要配置。</p>
+<p>也就是说，这种方式不用去配置ssh，只是每次push pull 时都会提示你输入用户名和密码。</p>
+<p>git add .<br>git commit -m “1”<br>这两句用来将改动文件添加进工作区，然后再提交到本地仓库。这里的add后面的 . 意思是把所有改动的文件都添加进工作区，这样很方便。</p>
+<p>git push -u origin master 将本地仓库的改动推送到coding上的远程仓库，第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令为git push origin master</p>
+<p>这里还要说一下，不知道为什么themes文件夹里我另外clone下来的主题没办法add，我觉得可能是因为他本身也是一个git仓库，里面也有.git文件，于是我把它删了再add也没用，最后我把里面的文件复制出来，删掉他，再在原来的地方重建一个同名文件夹，并把刚才复制的文件放进去，搞定。</p>
+<p>还有，blog里的.gitignore是hexo自己生成的，用来在add时忽略掉不需要的文件。</p>
+<p>现在需要搬迁环境或者是要同时在另外一台电脑上写文章是都可以使用以下命令：</p>
+<ol>
+<li>使用git clone origin git@git.coding.net:silence1772/hexo.git<br>（也可以用https协议）</li>
+</ol>
+<ol>
+<li>在本地新拷贝的hexo文件夹下通过Git bash依次执行下列指令（安装了node.js和git）：<br>npm install hexo<br>npm install<br>npm install hexo-deployer-git（记得，不需要hexo init这条指令）。</li>
+</ol>
+<p>这里要注意一下，因为我们是在国内的网络环境，连接npm的网站时大部分时间会抽风，幸好阿里建了一个镜像站，用这个来速度就快多了。<br>指行如下命令：（完整复制）<br>alias cnpm=”npm –registry=<a href="https://registry.npm.taobao.org" target="_blank" rel="external">https://registry.npm.taobao.org</a> \<br>–cache=$HOME/.npm/.cache/cnpm \<br>–disturl=<a href="https://npm.taobao.org/dist" target="_blank" rel="external">https://npm.taobao.org/dist</a> \<br>–userconfig=$HOME/.cnpmrc”</p>
+<p>然后上面的npm改成cnpm就可以了。</p>
+<p>就这样，又可以开始写作了。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/12/06/hexo博客搬迁环境备忘/">hexo博客搬迁环境备忘</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">吴泽伟</a></p>
+        <p><span>发布时间:</span>2016-12-06, 16:43:37</p>
+        <p><span>最后更新:</span>2017-04-04, 21:06:34</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/12/06/hexo博客搬迁环境备忘/" title="hexo博客搬迁环境备忘">http://silence1772.cn/2016/12/06/hexo博客搬迁环境备忘/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://silence1772.cn/2016/12/06/hexo博客搬迁环境备忘/　　作者: 吴泽伟" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/12/06/POJ3026-BFS预处理-最小生成树/">
+                    POJ3026 BFS预处理+最小生成树
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/12/07/HDU1285-拓扑排序/">
+                    HDU1285 拓扑排序
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"hexo博客搬迁环境备忘　| 吴泽伟　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/12/06/hexo博客搬迁环境备忘/" data-title="hexo博客搬迁环境备忘" data-url="http://silence1772.cn/2016/12/06/hexo博客搬迁环境备忘/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"silence1772"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/12/06/POJ3026-BFS预处理-最小生成树/" title="上一篇: POJ3026 BFS预处理+最小生成树">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/12/07/HDU1285-拓扑排序/" title="下一篇: HDU1285 拓扑排序">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/c-经典项目贪吃蛇小游戏详细教程/">c++经典项目贪吃蛇小游戏详细教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/02/hexo博客提交搜索引擎收录及统计-百度-google/">hexo博客提交搜索引擎收录及统计(百度+google)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/01/2017-我换新主题啦/">2017 我换新主题啦</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/HDU1284-钱币兑换-完全背包/">HDU1284 钱币兑换 完全背包</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/c-IO函数cstdio与stdio-h问题/">c++IO函数cstdio与stdio.h问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/结构体数组建立邻接表/">结构体数组建立邻接表</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/51nod-1737-配对/">51nod 1737 配对</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/30/HDU2441-筛素数-高精度除法/">HDU2441 筛素数+高精度除法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/30/HDU2087-KMP字符串匹配/">HDU2087 KMP字符串匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/HDU1018-阶乘的位数/">HDU1018 阶乘的位数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/HOJ1215-筛数法应用/">HOJ1215 筛数法应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/POJ2245-DFS求组合数/">POJ2245 DFS求组合数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/POJ1019-数学规律/">POJ1019 数学规律</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/KMPP求最小循环节/">KMPP求最小循环节</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/18001-Farmer-Cat-数学/">18001 Farmer Cat 数学</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/17996-Daily-Cool-Run-动态规划/">17996 Daily Cool Run 动态规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/24/腾讯云服务器相关问题/">腾讯云服务器相关问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/23/pair用法/">pair用法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/23/POJ1035-串/">POJ1035 串</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/华农数信学院人气王-站卢/">华农数信学院人气王-站卢</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/SCAU2016新生赛题目/">SCAU2016新生赛题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/vim代码补全插件YCM/">vim代码补全插件YCM</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/13/编译器gcc与调试器gdb/">编译器gcc与调试器gdb</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/13/Linux下gcc使用命令/">Linux下gcc使用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/12/vim基础学习/">vim基础学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/08/socket编程基础/">socket编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/07/拓扑排序与链式前向星详解/">拓扑排序与链式前向星详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/07/HDU1285-拓扑排序/">HDU1285 拓扑排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/hexo博客搬迁环境备忘/">hexo博客搬迁环境备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/POJ3026-BFS预处理-最小生成树/">POJ3026 BFS预处理+最小生成树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/POJ1258-Prim模板题/">POJ1258 Prim模板题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/05/Ubuntu-16-04与Win7双系统作死笔记/">Ubuntu 16.04与Win7双系统作死笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/SCAU18114-Ly-and-PostCards-未AC/">SCAU18114 Ly and PostCards(未AC)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/Kruskal算法并查集/">Kruskal算法并查集</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/POJ2485-Kruskal-并查集/">POJ2485 Kruskal+并查集</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/TCP-IP协议简单理解/">TCP/IP协议简单理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/最小生成树Prim算法理解/">最小生成树Prim算法理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/POJ1789-Prim算法求最小生成树/">POJ1789 Prim算法求最小生成树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/POJ2240-Flyod或Bellman-Ford算法/">POJ2240 Flyod或Bellman-Ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/Flody最短路算法/">Flody最短路算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/POJ1125-Flyod最短路/">POJ1125 Flyod最短路</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/POJ2253-Dijkstra变形/">POJ2253 Dijkstra变形</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/28/POJ1062-Dijkstra最短路径/">POJ1062 Dijkstra最短路径</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/28/POJ2531-DFS-剪枝/">POJ2531 DFS+剪枝</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/25/POJ2488-DFS骑士棋盘/">POJ2488 DFS骑士棋盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/Git使用教程/">Git使用教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/SCAU18091-Jasson请大家吃糖/">SCAU18091 Jasson请大家吃糖</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1159-LCS-滚动数组/">POJ1159 LCS+滚动数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1080-LCS最长公共子序列变形/">POJ1080 LCS最长公共子序列变形</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ2533-DP最长上升子序列LIS/">POJ2533 DP最长上升子序列LIS</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1260-珍珠-DP/">POJ1260 珍珠 DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ3176-数塔-简单DP/">POJ3176 数塔 简单DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/22/POJ1836-LIS最长上升子序列/">POJ1836 LIS最长上升子序列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/POJ3267-DP/">POJ3267 DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/动态规划0-1背包问题/">动态规划0-1背包问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/KMP算法/">KMP算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/SCAU17973-Takio的滑板鞋/">SCAU17973 Takio的滑板鞋</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/SCAU17968-Takio与Blue的人生赢家之战/">SCAU17968 Takio与Blue的人生赢家之战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/19/SCAU1081-字符串清除指定子串/">SCAU1081 字符串清除指定子串</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17967-大师姐唱K的固有结界/">SCAU17967 大师姐唱K的固有结界</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17984-FFF团的怒火/">SCAU17984 FFF团的怒火</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17972-Golden-gun的巧克力/">SCAU17972 Golden gun的巧克力</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17978 倒不了的塔/">SCAU17978 倒不了的塔</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17983-jubea/">SCAU17983 jubea</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/17/最短路算法：Bellman-ford-Dijkstra-floyd-SPFA详解/">最短路算法：Bellman-ford Dijkstra floyd SPFA详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/16/POJ1860-Bellman-Ford算法逆用/">POJ1860 Bellman-Ford算法逆用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/16/POJ3259-Bellman-Ford算法/">POJ3259 Bellman-Ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/15/HDU1874-bellman-ford算法/">HDU1874 bellman-ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/POJ3083-DFS-BFS/">POJ3083 DFS+BFS</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/POJ2049-bfs-优先队列/">POJ2049 bfs+优先队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ3278-bfs入门题/">POJ3278 bfs入门题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ3295-堆栈/">POJ3295 堆栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ1068-括号匹配/">POJ1068 括号匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/poj2506-递推+大数加法/">poj2506 递推+大数加法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/poj2586-贪心/">poj2586 贪心</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/POJ1328-贪心/">POJ 1328贪心</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/poj2965-bfs+枚举/">poj2965-bfs+枚举</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/poj1753-bfs+枚举/">poj1753-bfs+枚举</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/scau-8618-大牛之路II/">scau 8618 大牛之路II</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/04/scau-8613-锁/">scau 8613 锁</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 吴泽伟
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 7;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-89688633-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+             post: ".article-entry a[href], .copyright a[href]", 
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

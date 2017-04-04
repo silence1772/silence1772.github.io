@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="吴泽伟" />
+
+
+
+<meta name="description" content="有c个种品质不同的Pearls，若要买某一品质的Pearl必须在你买的数量的基础上，多付10个这种Pearl的价钱，可以用高品质的Pearl代替低品质的（通过将少购买的种类来节约多支付的10个的价钱）。求要买到所有目标Pearls至少要花多少钱。">
+<meta name="keywords" content="动态规划">
+<meta property="og:type" content="article">
+<meta property="og:title" content="POJ1260 珍珠 DP">
+<meta property="og:url" content="http://silence1772.cn/2016/11/23/POJ1260-珍珠-DP/index.html">
+<meta property="og:site_name" content="吴泽伟">
+<meta property="og:description" content="有c个种品质不同的Pearls，若要买某一品质的Pearl必须在你买的数量的基础上，多付10个这种Pearl的价钱，可以用高品质的Pearl代替低品质的（通过将少购买的种类来节约多支付的10个的价钱）。求要买到所有目标Pearls至少要花多少钱。">
+<meta property="og:updated_time" content="2017-04-04T12:25:36.327Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="POJ1260 珍珠 DP">
+<meta name="twitter:description" content="有c个种品质不同的Pearls，若要买某一品质的Pearl必须在你买的数量的基础上，多付10个这种Pearl的价钱，可以用高品质的Pearl代替低品质的（通过将少购买的种类来节约多支付的10个的价钱）。求要买到所有目标Pearls至少要花多少钱。">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="吴泽伟" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon1.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>POJ1260 珍珠 DP | 吴泽伟</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?01c8e796d908f246a43fe2b8f0b53e25";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/头像.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">吴泽伟</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">凛冬将至。</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/tags/">分类</a></li>
+                        
+                            <li><a href="/about/">关于</a></li>
+                        
+                            <li><a href="/about/">留言</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:silence17726@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/silence1772" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa Coding" href="https://coding.net/u/silence1772" title="Coding"></a>
+                            
+                                <a class="fa QQ" href="/603497448" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BFS/">BFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DFS/">DFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/优先队列/">优先队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态规划/">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图论/">图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆栈/">堆栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数加法/">大数加法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/完全背包DP/">完全背包DP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并查集/">并查集</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/拓扑排序/">拓扑排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数论/">数论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/枚举/">枚举</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/模拟/">模拟</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/贪心/">贪心</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/递推/">递推</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">吴泽伟</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/头像.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">吴泽伟</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">凛冬将至。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/tags/">分类</a></li>
+                
+                    <li><a href="/about/">关于</a></li>
+                
+                    <li><a href="/about/">留言</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:silence17726@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/silence1772" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa Coding" target="_blank" href="https://coding.net/u/silence1772" title="Coding"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/603497448" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-POJ1260-珍珠-DP" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/23/POJ1260-珍珠-DP/" class="article-date">
+      <time datetime="2016-11-23T06:21:14.000Z" itemprop="datePublished">2016-11-23</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      POJ1260 珍珠 DP
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/ACM/">ACM</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/动态规划/">动态规划</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="Pearls"><a href="#Pearls" class="headerlink" title="Pearls"></a>Pearls</h3><p>Time Limit: 1000MS        Memory Limit: 10000K<br>Total Submissions: 8966        Accepted: 4494</p>
+<h3 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h3><p>In Pearlania everybody is fond of pearls. One company, called The Royal Pearl, produces a lot of jewelry with pearls in it. The Royal Pearl has its name because it delivers to the royal family of Pearlania. But it also produces bracelets and necklaces for ordinary people. Of course the quality of the pearls for these people is much lower then the quality of pearls for the royal family.In Pearlania pearls are separated into 100 different quality classes. A quality class is identified by the price for one single pearl in that quality class. This price is unique for that quality class and the price is always higher then the price for a pearl in a lower quality class.<br>Every month the stock manager of The Royal Pearl prepares a list with the number of pearls needed in each quality class. The pearls are bought on the local pearl market. Each quality class has its own price per pearl, but for every complete deal in a certain quality class one has to pay an extra amount of money equal to ten pearls in that class. This is to prevent tourists from buying just one pearl.<br>Also The Royal Pearl is suffering from the slow-down of the global economy. Therefore the company needs to be more efficient. The CFO (chief financial officer) has discovered that he can sometimes save money by buying pearls in a higher quality class than is actually needed.No customer will blame The Royal Pearl for putting better pearls in the bracelets, as long as the<br>prices remain the same.<br>For example 5 pearls are needed in the 10 Euro category and 100 pearls are needed in the 20 Euro category. That will normally cost: (5+10)<em>10+(100+10)</em>20 = 2350 Euro.Buying all 105 pearls in the 20 Euro category only costs: (5+100+10)*20 = 2300 Euro.<br>The problem is that it requires a lot of computing work before the CFO knows how many pearls can best be bought in a higher quality class. You are asked to help The Royal Pearl with a computer program. </p>
+<p>Given a list with the number of pearls and the price per pearl in different quality classes, give the lowest possible price needed to buy everything on the list. Pearls can be bought in the requested,or in a higher quality class, but not in a lower one. </p>
+<h3 id="Input"><a href="#Input" class="headerlink" title="Input"></a>Input</h3><p>The first line of the input contains the number of test cases. Each test case starts with a line containing the number of categories c (1&lt;=c&lt;=100). Then, c lines follow, each with two numbers ai and pi. The first of these numbers is the number of pearls ai needed in a class (1 &lt;= ai &lt;= 1000).<br>The second number is the price per pearl pi in that class (1 &lt;= pi &lt;= 1000). The qualities of the classes (and so the prices) are given in ascending order. All numbers in the input are integers. </p>
+<h3 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h3><p>For each test case a single line containing a single number: the lowest possible price needed to buy everything on the list. </p>
+<h3 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input"></a>Sample Input</h3><p>2<br>2<br>100 1<br>100 2<br>3<br>1 10<br>1 11<br>100 12</p>
+<h3 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output"></a>Sample Output</h3><p>330<br>1344</p>
+<h3 id="Source"><a href="#Source" class="headerlink" title="Source"></a>Source</h3><p>Northwestern Europe 2002</p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>题意较难读懂，还是看英文好<br>题意：有c个种品质不同的Pearls，若要买某一品质的Pearl必须在你买的数量的基础上，多付10个这种Pearl的价钱，可以用高品质的Pearl代替低品质的（通过将少购买的种类来节约多支付的10个的价钱）。求要买到所有目标Pearls至少要花多少钱。</p>
+<p><em>：对品质为i的Pearl而言，若存在j &gt; i使得用pearl[j]代替pearl[i]时，节约了钱，则不需要再算k (k &gt; j)去替代i的情况。因为前面已经有了最优解，也就是说相互代替不会跳跃。例如 3 5， 90 7， 100 12 要想代替3个5价值的首先考虑 用7价值的代替，因为 3</em>7=21 （3+10）* 5 =65 显然比较合算，这样就不需要考虑用12价值的那个代替了。</p>
+<p>思路：DP。基于（<em>），便可以构造出DP的结构了。用sum[i]表示前i种pearl总数，则对于i品质的pearl来说，dp[i]可能是dp[0] + (sum[i] - sum[0] + 10 ）</em> pri[i]，即前面所有的pearl[1~i]都用i的价值去买，或者可能为dp[1] + (sum[i] - sum[1] + 10 ）<em> pri[i]，即pearl[2~i]都用i的价值去买…..故不难得到DP的状态方程：dp[i] = min(dp[j] + (sum[i] - sum[j] + 10 ）</em> pri[k]), 0 &lt; j &lt; i 。</p>
+<h3 id="source-code"><a href="#source-code" class="headerlink" title="source code"></a>source code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MIN(a,b) a&lt;b?a:b;</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX=<span class="number">110</span>;</div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> sum[MAX];<span class="comment">//保存当前珍珠总数目</span></div><div class="line">    <span class="keyword">int</span> dp[MAX];</div><div class="line">    <span class="keyword">int</span> ai[MAX];<span class="comment">//数目</span></div><div class="line">    <span class="keyword">int</span> pi[MAX];<span class="comment">//价格</span></div><div class="line">    <span class="keyword">int</span> T,n;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;T;</div><div class="line">    <span class="keyword">while</span>(T--)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">memset</span>(sum,<span class="number">0</span>,<span class="keyword">sizeof</span>(sum));</div><div class="line">        <span class="built_in">memset</span>(dp,<span class="number">0</span>,<span class="keyword">sizeof</span>(dp));</div><div class="line">        <span class="built_in">cin</span>&gt;&gt;n;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">cin</span>&gt;&gt;ai[i]&gt;&gt;pi[i];</div><div class="line">            sum[i]=sum[i<span class="number">-1</span>]+ai[i];<span class="comment">//同时计算数量</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</div><div class="line">        &#123;</div><div class="line">            dp[i]=(ai[i]+<span class="number">10</span>)*pi[i]+dp[i<span class="number">-1</span>];<span class="comment">//未优化最坏解</span></div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;i;j++)<span class="comment">//枚举J，将j到i的部分替换为i</span></div><div class="line">            &#123;</div><div class="line">                dp[i]=MIN(dp[i],dp[j]+(sum[i]-sum[j]+<span class="number">10</span>)*pi[i])<span class="comment">//更新</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;dp[n]&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+  </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/11/23/POJ3176-数塔-简单DP/">
+                    POJ3176 数塔 简单DP
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/11/23/POJ2533-DP最长上升子序列LIS/">
+                    POJ2533 DP最长上升子序列LIS
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"POJ1260 珍珠 DP　| 吴泽伟　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/11/23/POJ1260-珍珠-DP/" data-title="POJ1260 珍珠 DP" data-url="http://silence1772.cn/2016/11/23/POJ1260-珍珠-DP/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"silence1772"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/11/23/POJ3176-数塔-简单DP/" title="上一篇: POJ3176 数塔 简单DP">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/11/23/POJ2533-DP最长上升子序列LIS/" title="下一篇: POJ2533 DP最长上升子序列LIS">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/c-经典项目贪吃蛇小游戏详细教程/">c++经典项目贪吃蛇小游戏详细教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/02/hexo博客提交搜索引擎收录及统计-百度-google/">hexo博客提交搜索引擎收录及统计(百度+google)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/01/2017-我换新主题啦/">2017 我换新主题啦</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/HDU1284-钱币兑换-完全背包/">HDU1284 钱币兑换 完全背包</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/c-IO函数cstdio与stdio-h问题/">c++IO函数cstdio与stdio.h问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/结构体数组建立邻接表/">结构体数组建立邻接表</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/51nod-1737-配对/">51nod 1737 配对</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/30/HDU2441-筛素数-高精度除法/">HDU2441 筛素数+高精度除法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/30/HDU2087-KMP字符串匹配/">HDU2087 KMP字符串匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/HDU1018-阶乘的位数/">HDU1018 阶乘的位数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/HOJ1215-筛数法应用/">HOJ1215 筛数法应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/POJ2245-DFS求组合数/">POJ2245 DFS求组合数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/POJ1019-数学规律/">POJ1019 数学规律</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/KMPP求最小循环节/">KMPP求最小循环节</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/18001-Farmer-Cat-数学/">18001 Farmer Cat 数学</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/17996-Daily-Cool-Run-动态规划/">17996 Daily Cool Run 动态规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/24/腾讯云服务器相关问题/">腾讯云服务器相关问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/23/pair用法/">pair用法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/23/POJ1035-串/">POJ1035 串</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/华农数信学院人气王-站卢/">华农数信学院人气王-站卢</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/SCAU2016新生赛题目/">SCAU2016新生赛题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/vim代码补全插件YCM/">vim代码补全插件YCM</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/13/编译器gcc与调试器gdb/">编译器gcc与调试器gdb</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/13/Linux下gcc使用命令/">Linux下gcc使用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/12/vim基础学习/">vim基础学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/08/socket编程基础/">socket编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/07/拓扑排序与链式前向星详解/">拓扑排序与链式前向星详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/07/HDU1285-拓扑排序/">HDU1285 拓扑排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/hexo博客搬迁环境备忘/">hexo博客搬迁环境备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/POJ3026-BFS预处理-最小生成树/">POJ3026 BFS预处理+最小生成树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/POJ1258-Prim模板题/">POJ1258 Prim模板题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/05/Ubuntu-16-04与Win7双系统作死笔记/">Ubuntu 16.04与Win7双系统作死笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/SCAU18114-Ly-and-PostCards-未AC/">SCAU18114 Ly and PostCards(未AC)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/Kruskal算法并查集/">Kruskal算法并查集</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/POJ2485-Kruskal-并查集/">POJ2485 Kruskal+并查集</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/TCP-IP协议简单理解/">TCP/IP协议简单理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/最小生成树Prim算法理解/">最小生成树Prim算法理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/POJ1789-Prim算法求最小生成树/">POJ1789 Prim算法求最小生成树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/POJ2240-Flyod或Bellman-Ford算法/">POJ2240 Flyod或Bellman-Ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/Flody最短路算法/">Flody最短路算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/POJ1125-Flyod最短路/">POJ1125 Flyod最短路</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/POJ2253-Dijkstra变形/">POJ2253 Dijkstra变形</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/28/POJ1062-Dijkstra最短路径/">POJ1062 Dijkstra最短路径</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/28/POJ2531-DFS-剪枝/">POJ2531 DFS+剪枝</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/25/POJ2488-DFS骑士棋盘/">POJ2488 DFS骑士棋盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/Git使用教程/">Git使用教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/SCAU18091-Jasson请大家吃糖/">SCAU18091 Jasson请大家吃糖</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1159-LCS-滚动数组/">POJ1159 LCS+滚动数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1080-LCS最长公共子序列变形/">POJ1080 LCS最长公共子序列变形</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ2533-DP最长上升子序列LIS/">POJ2533 DP最长上升子序列LIS</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1260-珍珠-DP/">POJ1260 珍珠 DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ3176-数塔-简单DP/">POJ3176 数塔 简单DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/22/POJ1836-LIS最长上升子序列/">POJ1836 LIS最长上升子序列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/POJ3267-DP/">POJ3267 DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/动态规划0-1背包问题/">动态规划0-1背包问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/KMP算法/">KMP算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/SCAU17973-Takio的滑板鞋/">SCAU17973 Takio的滑板鞋</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/SCAU17968-Takio与Blue的人生赢家之战/">SCAU17968 Takio与Blue的人生赢家之战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/19/SCAU1081-字符串清除指定子串/">SCAU1081 字符串清除指定子串</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17967-大师姐唱K的固有结界/">SCAU17967 大师姐唱K的固有结界</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17984-FFF团的怒火/">SCAU17984 FFF团的怒火</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17972-Golden-gun的巧克力/">SCAU17972 Golden gun的巧克力</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17978 倒不了的塔/">SCAU17978 倒不了的塔</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17983-jubea/">SCAU17983 jubea</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/17/最短路算法：Bellman-ford-Dijkstra-floyd-SPFA详解/">最短路算法：Bellman-ford Dijkstra floyd SPFA详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/16/POJ1860-Bellman-Ford算法逆用/">POJ1860 Bellman-Ford算法逆用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/16/POJ3259-Bellman-Ford算法/">POJ3259 Bellman-Ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/15/HDU1874-bellman-ford算法/">HDU1874 bellman-ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/POJ3083-DFS-BFS/">POJ3083 DFS+BFS</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/POJ2049-bfs-优先队列/">POJ2049 bfs+优先队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ3278-bfs入门题/">POJ3278 bfs入门题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ3295-堆栈/">POJ3295 堆栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ1068-括号匹配/">POJ1068 括号匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/poj2506-递推+大数加法/">poj2506 递推+大数加法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/poj2586-贪心/">poj2586 贪心</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/POJ1328-贪心/">POJ 1328贪心</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/poj2965-bfs+枚举/">poj2965-bfs+枚举</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/poj1753-bfs+枚举/">poj1753-bfs+枚举</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/scau-8618-大牛之路II/">scau 8618 大牛之路II</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/04/scau-8613-锁/">scau 8613 锁</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 吴泽伟
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 7;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-89688633-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+             post: ".article-entry a[href], .copyright a[href]", 
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

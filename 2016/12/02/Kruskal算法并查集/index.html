@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="吴泽伟" />
+
+
+
+<meta name="description" content="Kruskal算法的第一步是给所有边按照从小到大的顺序排列。这一步可以直接使用库函数 qsort或者sort。接下来从小到大依次考查每条边(u,v)。 情况1：u和v在同一个连通分量中，那么加入(u, v)后会形成环，因此不能选择。 情况2：如果u和v在不同的连通分量，那么加入(u, v)一定是最优的。为什么呢？下面用 反证法——如果不加这条边能得到一个最优解T，则T+(u, v)一定有且只有一个">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kruskal算法并查集">
+<meta property="og:url" content="http://silence1772.cn/2016/12/02/Kruskal算法并查集/index.html">
+<meta property="og:site_name" content="吴泽伟">
+<meta property="og:description" content="Kruskal算法的第一步是给所有边按照从小到大的顺序排列。这一步可以直接使用库函数 qsort或者sort。接下来从小到大依次考查每条边(u,v)。 情况1：u和v在同一个连通分量中，那么加入(u, v)后会形成环，因此不能选择。 情况2：如果u和v在不同的连通分量，那么加入(u, v)一定是最优的。为什么呢？下面用 反证法——如果不加这条边能得到一个最优解T，则T+(u, v)一定有且只有一个">
+<meta property="og:image" content="http://ofx0oa4m3.bkt.clouddn.com/689bf6219a5ff94297d08c5b6f95bb38.jpg">
+<meta property="og:updated_time" content="2017-04-04T12:25:36.323Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kruskal算法并查集">
+<meta name="twitter:description" content="Kruskal算法的第一步是给所有边按照从小到大的顺序排列。这一步可以直接使用库函数 qsort或者sort。接下来从小到大依次考查每条边(u,v)。 情况1：u和v在同一个连通分量中，那么加入(u, v)后会形成环，因此不能选择。 情况2：如果u和v在不同的连通分量，那么加入(u, v)一定是最优的。为什么呢？下面用 反证法——如果不加这条边能得到一个最优解T，则T+(u, v)一定有且只有一个">
+<meta name="twitter:image" content="http://ofx0oa4m3.bkt.clouddn.com/689bf6219a5ff94297d08c5b6f95bb38.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="吴泽伟" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon1.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Kruskal算法并查集 | 吴泽伟</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?01c8e796d908f246a43fe2b8f0b53e25";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/头像.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">吴泽伟</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">凛冬将至。</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/tags/">分类</a></li>
+                        
+                            <li><a href="/about/">关于</a></li>
+                        
+                            <li><a href="/about/">留言</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:silence17726@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/silence1772" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa Coding" href="https://coding.net/u/silence1772" title="Coding"></a>
+                            
+                                <a class="fa QQ" href="/603497448" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BFS/">BFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DFS/">DFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/优先队列/">优先队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态规划/">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图论/">图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆栈/">堆栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数加法/">大数加法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/完全背包DP/">完全背包DP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并查集/">并查集</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/拓扑排序/">拓扑排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数论/">数论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/枚举/">枚举</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/模拟/">模拟</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/贪心/">贪心</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/递推/">递推</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">吴泽伟</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/头像.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">吴泽伟</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">凛冬将至。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/tags/">分类</a></li>
+                
+                    <li><a href="/about/">关于</a></li>
+                
+                    <li><a href="/about/">留言</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:silence17726@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/silence1772" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa Coding" target="_blank" href="https://coding.net/u/silence1772" title="Coding"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/603497448" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Kruskal算法并查集" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/02/Kruskal算法并查集/" class="article-date">
+      <time datetime="2016-12-02T13:44:02.000Z" itemprop="datePublished">2016-12-02</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Kruskal算法并查集
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/ACM/">ACM</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="此文来自《算法竞赛入门经典-第二版-》-刘汝佳"><a href="#此文来自《算法竞赛入门经典-第二版-》-刘汝佳" class="headerlink" title="此文来自《算法竞赛入门经典(第二版)》 刘汝佳"></a>此文来自《算法竞赛入门经典(第二版)》 刘汝佳</h4><p>Kruskal算法的第一步是给所有边按照从小到大的顺序排列。这一步可以直接使用库函数<br>qsort或者sort。接下来从小到大依次考查每条边(u,v)。<br>情况1：u和v在同一个连通分量中，那么加入(u, v)后会形成环，因此不能选择。<br>情况2：如果u和v在不同的连通分量，那么加入(u, v)一定是最优的。为什么呢？下面用<br>反证法——如果不加这条边能得到一个最优解T，则T+(u, v)一定有且只有一个环，而且环中<br>至少有一条边(u’ , v’)的权值大于或等于(u,v)的权值。删除该边后，得到的新树T’=T+(u, v)-(u’,<br>v’)不会比T更差。因此，加入(u, v)不会比不加入差。<br>下面是伪代码：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">把所有边排序，记第i小的边为e[i]（<span class="number">1</span>&lt;=i&lt;m）</div><div class="line">初始化MST为空</div><div class="line">初始化连通分量，让每个点自成一个独立的连通分量</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++)</div><div class="line">	<span class="keyword">if</span>(e[i].u和e[i].v不在同一个连通分量) &#123;</div><div class="line">		把边e[i]加入MST</div><div class="line">		合并e[i].u和e[i].v所在的连通分量</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在上面的伪代码中，最关键的地方在于“连通分量的查询与合并”：需要知道任意两个点<br>是否在同一个连通分量中，还需要合并两个连通分量。<br>最容易想到的方法是“暴力”——每次“合并”时只在MST中加入一条边（如果使用邻接矩<br>阵，只需G[e[i].u][e[i].v]=1），而“查询”时直接在MST中进行图遍历（DFS和BFS都可以判断<br>连通性）。遗憾的是，这个方法不仅复杂（需要写DFS或者BFS），而且效率不高。<br>并查集。有一种简洁高效的方法可用来处理这个问题：使用并查集（Union-Find<br>Set）。可以把每个连通分量看成一个集合，该集合包含了连通分量中的所有点。这些点两<br>两连通，而具体的连通方式无关紧要，就好比集合中的元素没有先后顺序之分，只有“属<br>于”和“不属于”的区别。在图中，每个点恰好属于一个连通分量，对应到集合表示中，每个<br>元素恰好属于一个集合。换句话说，图的所有连通分量可以用若干个不相交集合来表示。<br>并查集的精妙之处在于用树来表示集合。例如，若包含点1，2，3，4，5，6的图有3个<br>连通分量{1,3}、{2,5,6}、{4}，则需要用3棵树来表示。这3棵树的具体形态无关紧要，只要<br>有一棵树包含1、3两个点，一棵树包含2、5、6这3个点，还有一棵树只包含4这一个点即<br>可。规定每棵树的根结点是这棵树所对应的集合的代表元（representative）。<br>如果把x的父结点保存在p[x]中（如果x没有父结点，则p[x]等于x），则不难写出“查找结<br>点x所在树的根结点”的递归程序：<br>int find(int x) { p[x] == x ? x : find(p[x]); }，<br>通俗地讲就是：<br>如果p[x]等于x，说明x本身就是树根，因此返回x；否则返回x的父结点p[x]所在树的树根。<br>问题来了：在特殊情况下，这棵树可能是一条长长的链。设链的最后一个结点为x，则<br>每次执行find(x)都会遍历整条链，效率十分低下。看上去是个很棘手的问题，其实改进方法<br>很简单。既然每棵树表示的只是一个集合，因此树的形态是无关紧要的，并不需要在“查<br>找”操作之后保持树的形态不变，只要顺便把遍历过的结点都改成树根的子结点，下次查找<br>就会快很多了，如图11-5所示。<br><img src="http://ofx0oa4m3.bkt.clouddn.com/689bf6219a5ff94297d08c5b6f95bb38.jpg" alt="图11-5　并查集中的路径压缩"><br>这样，Kruskal算法的完整代码便不难给出了。假设第i条边的两个端点序号和权值分别<br>保存在u[i]，v[i]和w[i]中，而排序后第i小的边的序号保存在r[i]中（这叫做间接排序。排序<br>的关键字是对象的“代号”，而不是对象本身）。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">cmp</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> i, <span class="keyword">const</span> <span class="keyword">int</span> j)</span> </span>&#123; <span class="keyword">return</span> w[i]&lt;w[j]; &#125; <span class="comment">//间接排序函数</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="keyword">return</span> p[x] == x ? x : p[x] = find(p[x]);&#125;<span class="comment">//并查集的find</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">Kruskal</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> ans = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) p[i] = i; <span class="comment">//初始化并查集</span></div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) r[i] = i; <span class="comment">//初始化边序号</span></div><div class="line">	sort(r, r+m, cmp); <span class="comment">//给边排序</span></div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</div><div class="line">		<span class="keyword">int</span> e = r[i]; <span class="keyword">int</span> x = find(u[e]); <span class="keyword">int</span> y = find(v[e]);</div><div class="line">			<span class="comment">//找出当前边两个端点所在集合编号</span></div><div class="line">		<span class="keyword">if</span>(x != y) &#123; ans += w[e]; p[x] = y; &#125; <span class="comment">//如果在不同集合，合并</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> ans;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>注意，x和y分别是第e条边的两个端点所在连通分量的代表元。合并x和y所在集合可以<br>简单地写成p[x]=y，即直接把x作为y的子结点，则两个树就合并成一棵树了。注意不能写成<br>p[u[e]]=p[v[e]]，因为u[e]和v[e]不一定是树根。并查集的效率非常高，在平摊意义下，find函<br>数的时间复杂度几乎可以看成是常数（而union显然是常数时间）。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/12/02/POJ2485-Kruskal-并查集/">
+                    POJ2485 Kruskal+并查集
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/12/03/SCAU18114-Ly-and-PostCards-未AC/">
+                    SCAU18114 Ly and PostCards(未AC)
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Kruskal算法并查集　| 吴泽伟　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/12/02/Kruskal算法并查集/" data-title="Kruskal算法并查集" data-url="http://silence1772.cn/2016/12/02/Kruskal算法并查集/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"silence1772"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/12/02/POJ2485-Kruskal-并查集/" title="上一篇: POJ2485 Kruskal+并查集">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/12/03/SCAU18114-Ly-and-PostCards-未AC/" title="下一篇: SCAU18114 Ly and PostCards(未AC)">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/c-经典项目贪吃蛇小游戏详细教程/">c++经典项目贪吃蛇小游戏详细教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/02/hexo博客提交搜索引擎收录及统计-百度-google/">hexo博客提交搜索引擎收录及统计(百度+google)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/01/2017-我换新主题啦/">2017 我换新主题啦</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/HDU1284-钱币兑换-完全背包/">HDU1284 钱币兑换 完全背包</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/c-IO函数cstdio与stdio-h问题/">c++IO函数cstdio与stdio.h问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/结构体数组建立邻接表/">结构体数组建立邻接表</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/51nod-1737-配对/">51nod 1737 配对</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/30/HDU2441-筛素数-高精度除法/">HDU2441 筛素数+高精度除法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/30/HDU2087-KMP字符串匹配/">HDU2087 KMP字符串匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/HDU1018-阶乘的位数/">HDU1018 阶乘的位数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/HOJ1215-筛数法应用/">HOJ1215 筛数法应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/POJ2245-DFS求组合数/">POJ2245 DFS求组合数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/POJ1019-数学规律/">POJ1019 数学规律</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/KMPP求最小循环节/">KMPP求最小循环节</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/18001-Farmer-Cat-数学/">18001 Farmer Cat 数学</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/17996-Daily-Cool-Run-动态规划/">17996 Daily Cool Run 动态规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/24/腾讯云服务器相关问题/">腾讯云服务器相关问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/23/pair用法/">pair用法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/23/POJ1035-串/">POJ1035 串</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/华农数信学院人气王-站卢/">华农数信学院人气王-站卢</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/SCAU2016新生赛题目/">SCAU2016新生赛题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/vim代码补全插件YCM/">vim代码补全插件YCM</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/13/编译器gcc与调试器gdb/">编译器gcc与调试器gdb</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/13/Linux下gcc使用命令/">Linux下gcc使用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/12/vim基础学习/">vim基础学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/08/socket编程基础/">socket编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/07/拓扑排序与链式前向星详解/">拓扑排序与链式前向星详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/07/HDU1285-拓扑排序/">HDU1285 拓扑排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/hexo博客搬迁环境备忘/">hexo博客搬迁环境备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/POJ3026-BFS预处理-最小生成树/">POJ3026 BFS预处理+最小生成树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/POJ1258-Prim模板题/">POJ1258 Prim模板题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/05/Ubuntu-16-04与Win7双系统作死笔记/">Ubuntu 16.04与Win7双系统作死笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/SCAU18114-Ly-and-PostCards-未AC/">SCAU18114 Ly and PostCards(未AC)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/Kruskal算法并查集/">Kruskal算法并查集</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/POJ2485-Kruskal-并查集/">POJ2485 Kruskal+并查集</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/TCP-IP协议简单理解/">TCP/IP协议简单理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/最小生成树Prim算法理解/">最小生成树Prim算法理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/POJ1789-Prim算法求最小生成树/">POJ1789 Prim算法求最小生成树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/POJ2240-Flyod或Bellman-Ford算法/">POJ2240 Flyod或Bellman-Ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/Flody最短路算法/">Flody最短路算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/POJ1125-Flyod最短路/">POJ1125 Flyod最短路</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/POJ2253-Dijkstra变形/">POJ2253 Dijkstra变形</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/28/POJ1062-Dijkstra最短路径/">POJ1062 Dijkstra最短路径</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/28/POJ2531-DFS-剪枝/">POJ2531 DFS+剪枝</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/25/POJ2488-DFS骑士棋盘/">POJ2488 DFS骑士棋盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/Git使用教程/">Git使用教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/SCAU18091-Jasson请大家吃糖/">SCAU18091 Jasson请大家吃糖</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1159-LCS-滚动数组/">POJ1159 LCS+滚动数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1080-LCS最长公共子序列变形/">POJ1080 LCS最长公共子序列变形</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ2533-DP最长上升子序列LIS/">POJ2533 DP最长上升子序列LIS</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1260-珍珠-DP/">POJ1260 珍珠 DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ3176-数塔-简单DP/">POJ3176 数塔 简单DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/22/POJ1836-LIS最长上升子序列/">POJ1836 LIS最长上升子序列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/POJ3267-DP/">POJ3267 DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/动态规划0-1背包问题/">动态规划0-1背包问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/KMP算法/">KMP算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/SCAU17973-Takio的滑板鞋/">SCAU17973 Takio的滑板鞋</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/SCAU17968-Takio与Blue的人生赢家之战/">SCAU17968 Takio与Blue的人生赢家之战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/19/SCAU1081-字符串清除指定子串/">SCAU1081 字符串清除指定子串</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17967-大师姐唱K的固有结界/">SCAU17967 大师姐唱K的固有结界</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17984-FFF团的怒火/">SCAU17984 FFF团的怒火</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17972-Golden-gun的巧克力/">SCAU17972 Golden gun的巧克力</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17978 倒不了的塔/">SCAU17978 倒不了的塔</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17983-jubea/">SCAU17983 jubea</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/17/最短路算法：Bellman-ford-Dijkstra-floyd-SPFA详解/">最短路算法：Bellman-ford Dijkstra floyd SPFA详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/16/POJ1860-Bellman-Ford算法逆用/">POJ1860 Bellman-Ford算法逆用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/16/POJ3259-Bellman-Ford算法/">POJ3259 Bellman-Ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/15/HDU1874-bellman-ford算法/">HDU1874 bellman-ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/POJ3083-DFS-BFS/">POJ3083 DFS+BFS</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/POJ2049-bfs-优先队列/">POJ2049 bfs+优先队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ3278-bfs入门题/">POJ3278 bfs入门题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ3295-堆栈/">POJ3295 堆栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ1068-括号匹配/">POJ1068 括号匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/poj2506-递推+大数加法/">poj2506 递推+大数加法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/poj2586-贪心/">poj2586 贪心</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/POJ1328-贪心/">POJ 1328贪心</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/poj2965-bfs+枚举/">poj2965-bfs+枚举</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/poj1753-bfs+枚举/">poj1753-bfs+枚举</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/scau-8618-大牛之路II/">scau 8618 大牛之路II</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/04/scau-8613-锁/">scau 8613 锁</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 吴泽伟
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 7;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-89688633-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+             post: ".article-entry a[href], .copyright a[href]", 
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="吴泽伟" />
+
+
+
+<meta name="description" content="SCAU15年新生赛">
+<meta name="keywords" content="字符串,模拟">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SCAU17978 倒不了的塔">
+<meta property="og:url" content="http://silence1772.cn/2016/11/18/SCAU17978 倒不了的塔/index.html">
+<meta property="og:site_name" content="吴泽伟">
+<meta property="og:description" content="SCAU15年新生赛">
+<meta property="og:updated_time" content="2017-04-04T12:25:36.336Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SCAU17978 倒不了的塔">
+<meta name="twitter:description" content="SCAU15年新生赛">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="吴泽伟" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon1.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>SCAU17978 倒不了的塔 | 吴泽伟</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?01c8e796d908f246a43fe2b8f0b53e25";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/头像.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">吴泽伟</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">凛冬将至。</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/tags/">分类</a></li>
+                        
+                            <li><a href="/about/">关于</a></li>
+                        
+                            <li><a href="/about/">留言</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:silence17726@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/silence1772" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa Coding" href="https://coding.net/u/silence1772" title="Coding"></a>
+                            
+                                <a class="fa QQ" href="/603497448" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BFS/">BFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DFS/">DFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/优先队列/">优先队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态规划/">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图论/">图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆栈/">堆栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数加法/">大数加法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/完全背包DP/">完全背包DP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并查集/">并查集</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/拓扑排序/">拓扑排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数论/">数论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/枚举/">枚举</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/模拟/">模拟</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/贪心/">贪心</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/递推/">递推</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">吴泽伟</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/头像.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">吴泽伟</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">凛冬将至。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/tags/">分类</a></li>
+                
+                    <li><a href="/about/">关于</a></li>
+                
+                    <li><a href="/about/">留言</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:silence17726@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/silence1772" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa Coding" target="_blank" href="https://coding.net/u/silence1772" title="Coding"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/603497448" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-SCAU17978 倒不了的塔" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/18/SCAU17978 倒不了的塔/" class="article-date">
+      <time datetime="2016-11-18T09:56:16.000Z" itemprop="datePublished">2016-11-18</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SCAU17978 倒不了的塔
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/ACM/">ACM</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/字符串/">字符串</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/模拟/">模拟</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="17978-倒不了的塔"><a href="#17978-倒不了的塔" class="headerlink" title="17978 倒不了的塔"></a>17978 倒不了的塔</h2><p>时间限制:1000MS  内存限制:65535K<br>提交次数:314 通过次数:39 收入:124</p>
+<p>题型: 编程题   语言: G++</p>
+<h3 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h3><p>Dota是Defense of the Ancients的简称，是一个dhk和yjf都很喜欢玩的游戏。虽然作为一个ACMer大部分时间都在努力地码啊码，但是，这2个大神每当听到dota这个词就会<br>拉着别人打dota，丧心病狂得简直令人发指！于是作为他们同学的我也遭殃了。。。<br>    现在科普一下，dota是一开始每人选一个英雄来攻别人塔的游戏，此处省略一万字。。。里面有好多英雄可以选，什么力量型、敏捷型、智力型英雄，这些英雄还分了2个阵<br>型，天灾军团和近卫军团，每一个英雄都是不同的，好了，现在问题来了。<br>    近卫军团有n个英雄，天灾军团有m个英雄，一般我们都选近卫军团，所以只能选近卫军团的英雄，但是也可以输入-ap指令，然后我们所有人都可以选近卫军团和天灾军团的<br>英雄了。现在我、小A、小B、dhk、yjf按顺序选英雄（共5人），理论上某人选了的英雄别人是不能选的，现在我想知道我们选的英雄有多少种可能的情况，但是我又要陪他们打<br>dota，所以想请14级未来的acmer来算一算。<br>    另外，由于dhk和yjf是大神，只要他们各自输入mynameisdhk 、 mynameisyjf 别人选了的英雄他们也能选（而且不会冲突），必须连续的才能生效！</p>
+<h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h3><p>输入由3行组成，第一行分别是n，m，k，分别代表近卫军团的英雄数，天灾军团的英雄数，是否输入了-ap指令（0代表没有输入，1代表输入了）。<br>第二行是一串字符s1，代表dhk输入了的字符串，若字符串包含mynameisdhk 则dhk可以选别人选了的英雄。<br>第三行是一串字符s2，代表yjf输入了的字符串，若字符串包含mynameisyjf 则yjf 可以选别人选了的英雄。<br>其中0 &lt;= n + m &lt;= 64, 0 &lt;= k &lt;= 1, s1 和 s2 的长度小于100，且只包含小写字母<br>（sample有2组，只是给你们看的，实际的数据是单case的，所以每组数据只有上述描述的3行）</p>
+<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h3><p>直接输出题目要求的情况数。</p>
+<h3 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例"></a>输入样例</h3><p>5 50 0<br>mynameisdagouxiongnotdhk<br>niconicomynameisyjf</p>
+<p>3 2 1<br>niconicomynameisyjf<br>mynameisdagouxiongnotdhk</p>
+<h3 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例"></a>输出样例</h3><p>600</p>
+<p>120</p>
+<h3 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h3><p>需要注意的是，yjf选了C英雄，dhk选了D英雄 和 yjf选了 D 英雄，dhk选了C英雄，这是不一样的情况。</p>
+<h3 id="来源-jerrywanglaoji"><a href="#来源-jerrywanglaoji" class="headerlink" title="来源 jerrywanglaoji"></a>来源 jerrywanglaoji</h3><h3 id="作者-201230720309"><a href="#作者-201230720309" class="headerlink" title="作者 201230720309"></a>作者 201230720309</h3><h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>先用字符串模式匹配看看dhk和yjf各自是否输入mynameisdhk 、 mynameisyjf，这里我用的是上网找的KMP算法代码（其实也可以用几个循环暴力匹配），然后对各种情况进行分析即可，具体看下面的注释</p>
+<h3 id="Source-Code"><a href="#Source-Code" class="headerlink" title="Source Code"></a>Source Code</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">//从这里开始是KMP算法，如果匹配成功，</span></div><div class="line"><span class="comment">//则返回匹配串第一个字符的位置，</span></div><div class="line"><span class="comment">//否则返回-1</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">cal_next</span><span class="params">( <span class="keyword">char</span> * str, <span class="keyword">int</span> * next, <span class="keyword">int</span> len )</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i, j;</div><div class="line">    next[<span class="number">0</span>] = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">for</span>( i = <span class="number">1</span>; i &lt; len; i++ )</div><div class="line">    &#123;</div><div class="line">        j = next[ i - <span class="number">1</span> ];</div><div class="line">        <span class="keyword">while</span>( str[ j + <span class="number">1</span> ] != str[ i ] &amp;&amp; ( j &gt;= <span class="number">0</span> ) )</div><div class="line">        &#123;</div><div class="line">            j = next[ j ];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>( str[ i ] == str[ j + <span class="number">1</span> ] )</div><div class="line">        &#123;</div><div class="line">            next[ i ] = j + <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            next[ i ] = <span class="number">-1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">KMP</span><span class="params">( <span class="keyword">char</span> * str, <span class="keyword">int</span> slen, <span class="keyword">char</span> * ptr, <span class="keyword">int</span> plen, <span class="keyword">int</span> * next )</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> s_i = <span class="number">0</span>, p_i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>( s_i &lt; slen &amp;&amp; p_i &lt; plen )</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>( str[ s_i ] == ptr[ p_i ] )</div><div class="line">        &#123;</div><div class="line">            s_i++;</div><div class="line">            p_i++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>( p_i == <span class="number">0</span> )</div><div class="line">            &#123;</div><div class="line">                s_i++;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">                p_i = next[ p_i - <span class="number">1</span> ] + <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> ( p_i == plen ) ? ( s_i - plen ) : <span class="number">-1</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//到这里结束</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//str为母串，ptr为子串</span></div><div class="line">    <span class="keyword">char</span> str1[<span class="number">105</span>] = &#123;<span class="number">0</span>&#125;;<span class="comment">//保存dhk大神的输入</span></div><div class="line">    <span class="keyword">char</span> str2[<span class="number">105</span>] = &#123;<span class="number">0</span>&#125;;<span class="comment">//保存yif大神的输入</span></div><div class="line">    <span class="keyword">char</span> ptr1[<span class="number">105</span>] = &#123;<span class="string">"mynameisdhk"</span>&#125;;</div><div class="line">    <span class="keyword">char</span> ptr2[<span class="number">105</span>] = &#123;<span class="string">"mynameisyjf"</span>&#125;;</div><div class="line">    <span class="keyword">int</span> slen1, plen1;</div><div class="line">    <span class="keyword">int</span> slen2,plen2;</div><div class="line">    <span class="keyword">int</span> next1[<span class="number">105</span>],next2[<span class="number">105</span>];</div><div class="line">    <span class="keyword">int</span> n,m,k;</div><div class="line">    <span class="keyword">int</span> flag1,flag2;<span class="comment">//表示两位大神是否能够选其他人选过的</span></div><div class="line">    <span class="comment">//freopen("case.txt","r",stdin);</span></div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>,&amp;n,&amp;m,&amp;k);</div><div class="line">    <span class="comment">//近卫军团的英雄数，天灾军团的英雄数，是否输入了-ap指令</span></div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%s"</span>,str1);</div><div class="line">    slen1 = <span class="built_in">strlen</span>( str1 );</div><div class="line">    plen1 = <span class="built_in">strlen</span>( ptr1 );</div><div class="line">    cal_next( ptr1, next1, plen1 );</div><div class="line">    flag1=KMP( str1, slen1, ptr1, plen1, next1 ) ;</div><div class="line">    </div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%s"</span>,str2);</div><div class="line">    slen2 = <span class="built_in">strlen</span>( str2 );</div><div class="line">    plen2 = <span class="built_in">strlen</span>( ptr2 );</div><div class="line">    cal_next( ptr2, next2, plen2 );</div><div class="line">    flag2=KMP( str2, slen2, ptr2, plen2, next2 ) ;</div><div class="line">    </div><div class="line">	<span class="comment">//printf("%d %d",flag1,flag2);</span></div><div class="line">	</div><div class="line">	<span class="keyword">if</span>(!k)没有输入-ap指令的情况</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span>(flag1==<span class="number">-1</span>&amp;&amp;flag2==<span class="number">-1</span>)<span class="comment">//两位大神都没开功能</span></div><div class="line">		&#123;</div><div class="line">			<span class="keyword">int</span> i,sum=<span class="number">1</span>;</div><div class="line">			<span class="keyword">for</span>(i=n<span class="number">-4</span>;i&lt;=n;i++)</div><div class="line">			&#123;</div><div class="line">				sum*=i;</div><div class="line">			&#125;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,sum);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(flag1!=<span class="number">-1</span>&amp;&amp;flag2!=<span class="number">-1</span>)<span class="comment">//两位大神都开了功能</span></div><div class="line">		&#123;</div><div class="line">			<span class="keyword">int</span> i,sum=<span class="number">1</span>;</div><div class="line">			<span class="keyword">for</span>(i=n<span class="number">-2</span>;i&lt;=n;i++)</div><div class="line">			&#123;</div><div class="line">				sum*=i;</div><div class="line">			&#125;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,sum*n*n);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(flag1==<span class="number">-1</span>&amp;&amp;flag2!=<span class="number">-1</span>)<span class="comment">//dhk大神没开 yif大神开了</span></div><div class="line">		&#123;</div><div class="line">			<span class="keyword">int</span> i,sum=<span class="number">1</span>;</div><div class="line">			<span class="keyword">for</span>(i=n<span class="number">-3</span>;i&lt;=n;i++)</div><div class="line">			&#123;</div><div class="line">				sum*=i;</div><div class="line">			&#125;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,sum*n);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(flag1!=<span class="number">-1</span>&amp;&amp;flag2==<span class="number">-1</span>)<span class="comment">//dhk大神开了 yif大神没开</span></div><div class="line">		&#123;</div><div class="line">			<span class="keyword">int</span> i,sum=<span class="number">1</span>;</div><div class="line">			<span class="keyword">for</span>(i=n<span class="number">-2</span>;i&lt;=n;i++)</div><div class="line">			&#123;</div><div class="line">				sum*=i;</div><div class="line">			&#125;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,sum*(<span class="number">3</span>*(n<span class="number">-3</span>)+(n<span class="number">-3</span>)*(n<span class="number">-4</span>)));</div><div class="line">			<span class="comment">//dhk选前面的人已选过的情况+dhk选剩下的没选过的情况</span></div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span>(k)<span class="comment">//开了-ap指令的情况</span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> tn=n+m;<span class="comment">//和上面只有这里不同</span></div><div class="line">		<span class="keyword">if</span>(flag1==<span class="number">-1</span>&amp;&amp;flag2==<span class="number">-1</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">int</span> i,sum=<span class="number">1</span>;</div><div class="line">			<span class="keyword">for</span>(i=tn<span class="number">-4</span>;i&lt;=tn;i++)</div><div class="line">			&#123;</div><div class="line">				sum*=i;</div><div class="line">			&#125;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,sum);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(flag1!=<span class="number">-1</span>&amp;&amp;flag2!=<span class="number">-1</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">int</span> i,sum=<span class="number">1</span>;</div><div class="line">			<span class="keyword">for</span>(i=tn<span class="number">-2</span>;i&lt;=tn;i++)</div><div class="line">			&#123;</div><div class="line">				sum*=i;</div><div class="line">			&#125;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,sum*tn*tn);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(flag1==<span class="number">-1</span>&amp;&amp;flag2!=<span class="number">-1</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">int</span> i,sum=<span class="number">1</span>;</div><div class="line">			<span class="keyword">for</span>(i=tn<span class="number">-3</span>;i&lt;=tn;i++)</div><div class="line">			&#123;</div><div class="line">				sum*=i;</div><div class="line">			&#125;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,sum*tn);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(flag1!=<span class="number">-1</span>&amp;&amp;flag2==<span class="number">-1</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">int</span> i,sum=<span class="number">1</span>;</div><div class="line">			<span class="keyword">for</span>(i=tn<span class="number">-2</span>;i&lt;=tn;i++)</div><div class="line">			&#123;</div><div class="line">				sum*=i;</div><div class="line">			&#125;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,sum*(<span class="number">3</span>*(tn<span class="number">-3</span>)+(tn<span class="number">-3</span>)*(tn<span class="number">-4</span>)));</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/11/18/SCAU17978 倒不了的塔/">SCAU17978 倒不了的塔</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">吴泽伟</a></p>
+        <p><span>发布时间:</span>2016-11-18, 17:56:16</p>
+        <p><span>最后更新:</span>2017-04-04, 20:25:36</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/11/18/SCAU17978 倒不了的塔/" title="SCAU17978 倒不了的塔">http://silence1772.cn/2016/11/18/SCAU17978 倒不了的塔/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://silence1772.cn/2016/11/18/SCAU17978 倒不了的塔/　　作者: 吴泽伟" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/11/18/SCAU17983-jubea/">
+                    SCAU17983 jubea
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/11/18/SCAU17972-Golden-gun的巧克力/">
+                    SCAU17972 Golden gun的巧克力
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"SCAU17978 倒不了的塔　| 吴泽伟　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/11/18/SCAU17978 倒不了的塔/" data-title="SCAU17978 倒不了的塔" data-url="http://silence1772.cn/2016/11/18/SCAU17978 倒不了的塔/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"silence1772"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/11/18/SCAU17983-jubea/" title="上一篇: SCAU17983 jubea">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/11/18/SCAU17972-Golden-gun的巧克力/" title="下一篇: SCAU17972 Golden gun的巧克力">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/c-经典项目贪吃蛇小游戏详细教程/">c++经典项目贪吃蛇小游戏详细教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/02/hexo博客提交搜索引擎收录及统计-百度-google/">hexo博客提交搜索引擎收录及统计(百度+google)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/01/2017-我换新主题啦/">2017 我换新主题啦</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/HDU1284-钱币兑换-完全背包/">HDU1284 钱币兑换 完全背包</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/c-IO函数cstdio与stdio-h问题/">c++IO函数cstdio与stdio.h问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/结构体数组建立邻接表/">结构体数组建立邻接表</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/51nod-1737-配对/">51nod 1737 配对</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/30/HDU2441-筛素数-高精度除法/">HDU2441 筛素数+高精度除法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/30/HDU2087-KMP字符串匹配/">HDU2087 KMP字符串匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/HDU1018-阶乘的位数/">HDU1018 阶乘的位数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/HOJ1215-筛数法应用/">HOJ1215 筛数法应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/POJ2245-DFS求组合数/">POJ2245 DFS求组合数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/POJ1019-数学规律/">POJ1019 数学规律</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/KMPP求最小循环节/">KMPP求最小循环节</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/18001-Farmer-Cat-数学/">18001 Farmer Cat 数学</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/17996-Daily-Cool-Run-动态规划/">17996 Daily Cool Run 动态规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/24/腾讯云服务器相关问题/">腾讯云服务器相关问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/23/pair用法/">pair用法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/23/POJ1035-串/">POJ1035 串</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/华农数信学院人气王-站卢/">华农数信学院人气王-站卢</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/SCAU2016新生赛题目/">SCAU2016新生赛题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/vim代码补全插件YCM/">vim代码补全插件YCM</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/13/编译器gcc与调试器gdb/">编译器gcc与调试器gdb</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/13/Linux下gcc使用命令/">Linux下gcc使用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/12/vim基础学习/">vim基础学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/08/socket编程基础/">socket编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/07/拓扑排序与链式前向星详解/">拓扑排序与链式前向星详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/07/HDU1285-拓扑排序/">HDU1285 拓扑排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/hexo博客搬迁环境备忘/">hexo博客搬迁环境备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/POJ3026-BFS预处理-最小生成树/">POJ3026 BFS预处理+最小生成树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/POJ1258-Prim模板题/">POJ1258 Prim模板题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/05/Ubuntu-16-04与Win7双系统作死笔记/">Ubuntu 16.04与Win7双系统作死笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/SCAU18114-Ly-and-PostCards-未AC/">SCAU18114 Ly and PostCards(未AC)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/Kruskal算法并查集/">Kruskal算法并查集</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/POJ2485-Kruskal-并查集/">POJ2485 Kruskal+并查集</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/TCP-IP协议简单理解/">TCP/IP协议简单理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/最小生成树Prim算法理解/">最小生成树Prim算法理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/POJ1789-Prim算法求最小生成树/">POJ1789 Prim算法求最小生成树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/POJ2240-Flyod或Bellman-Ford算法/">POJ2240 Flyod或Bellman-Ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/Flody最短路算法/">Flody最短路算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/POJ1125-Flyod最短路/">POJ1125 Flyod最短路</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/POJ2253-Dijkstra变形/">POJ2253 Dijkstra变形</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/28/POJ1062-Dijkstra最短路径/">POJ1062 Dijkstra最短路径</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/28/POJ2531-DFS-剪枝/">POJ2531 DFS+剪枝</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/25/POJ2488-DFS骑士棋盘/">POJ2488 DFS骑士棋盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/Git使用教程/">Git使用教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/SCAU18091-Jasson请大家吃糖/">SCAU18091 Jasson请大家吃糖</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1159-LCS-滚动数组/">POJ1159 LCS+滚动数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1080-LCS最长公共子序列变形/">POJ1080 LCS最长公共子序列变形</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ2533-DP最长上升子序列LIS/">POJ2533 DP最长上升子序列LIS</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1260-珍珠-DP/">POJ1260 珍珠 DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ3176-数塔-简单DP/">POJ3176 数塔 简单DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/22/POJ1836-LIS最长上升子序列/">POJ1836 LIS最长上升子序列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/POJ3267-DP/">POJ3267 DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/动态规划0-1背包问题/">动态规划0-1背包问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/KMP算法/">KMP算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/SCAU17973-Takio的滑板鞋/">SCAU17973 Takio的滑板鞋</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/SCAU17968-Takio与Blue的人生赢家之战/">SCAU17968 Takio与Blue的人生赢家之战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/19/SCAU1081-字符串清除指定子串/">SCAU1081 字符串清除指定子串</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17967-大师姐唱K的固有结界/">SCAU17967 大师姐唱K的固有结界</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17984-FFF团的怒火/">SCAU17984 FFF团的怒火</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17972-Golden-gun的巧克力/">SCAU17972 Golden gun的巧克力</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17978 倒不了的塔/">SCAU17978 倒不了的塔</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17983-jubea/">SCAU17983 jubea</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/17/最短路算法：Bellman-ford-Dijkstra-floyd-SPFA详解/">最短路算法：Bellman-ford Dijkstra floyd SPFA详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/16/POJ1860-Bellman-Ford算法逆用/">POJ1860 Bellman-Ford算法逆用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/16/POJ3259-Bellman-Ford算法/">POJ3259 Bellman-Ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/15/HDU1874-bellman-ford算法/">HDU1874 bellman-ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/POJ3083-DFS-BFS/">POJ3083 DFS+BFS</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/POJ2049-bfs-优先队列/">POJ2049 bfs+优先队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ3278-bfs入门题/">POJ3278 bfs入门题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ3295-堆栈/">POJ3295 堆栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ1068-括号匹配/">POJ1068 括号匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/poj2506-递推+大数加法/">poj2506 递推+大数加法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/poj2586-贪心/">poj2586 贪心</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/POJ1328-贪心/">POJ 1328贪心</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/poj2965-bfs+枚举/">poj2965-bfs+枚举</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/poj1753-bfs+枚举/">poj1753-bfs+枚举</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/scau-8618-大牛之路II/">scau 8618 大牛之路II</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/04/scau-8613-锁/">scau 8613 锁</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 吴泽伟
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 7;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-89688633-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+             post: ".article-entry a[href], .copyright a[href]", 
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

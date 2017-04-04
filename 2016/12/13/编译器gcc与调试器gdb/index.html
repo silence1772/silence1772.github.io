@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="吴泽伟" />
+
+
+
+<meta name="description" content="此文摘自《算法竞赛入门经典(第二版)》 刘汝佳">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译器gcc与调试器gdb">
+<meta property="og:url" content="http://silence1772.cn/2016/12/13/编译器gcc与调试器gdb/index.html">
+<meta property="og:site_name" content="吴泽伟">
+<meta property="og:description" content="此文摘自《算法竞赛入门经典(第二版)》 刘汝佳">
+<meta property="og:updated_time" content="2017-04-04T12:25:36.348Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编译器gcc与调试器gdb">
+<meta name="twitter:description" content="此文摘自《算法竞赛入门经典(第二版)》 刘汝佳">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="吴泽伟" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon1.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>编译器gcc与调试器gdb | 吴泽伟</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?01c8e796d908f246a43fe2b8f0b53e25";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/头像.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">吴泽伟</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">凛冬将至。</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/tags/">分类</a></li>
+                        
+                            <li><a href="/about/">关于</a></li>
+                        
+                            <li><a href="/about/">留言</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:silence17726@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/silence1772" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa Coding" href="https://coding.net/u/silence1772" title="Coding"></a>
+                            
+                                <a class="fa QQ" href="/603497448" title="QQ"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BFS/">BFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DFS/">DFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/优先队列/">优先队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态规划/">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图论/">图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆栈/">堆栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数加法/">大数加法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/字符串/">字符串</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/完全背包DP/">完全背包DP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并查集/">并查集</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/拓扑排序/">拓扑排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数论/">数论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/枚举/">枚举</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/模拟/">模拟</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/贪心/">贪心</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/递推/">递推</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">吴泽伟</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/头像.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">吴泽伟</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">凛冬将至。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/tags/">分类</a></li>
+                
+                    <li><a href="/about/">关于</a></li>
+                
+                    <li><a href="/about/">留言</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:silence17726@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/silence1772" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa Coding" target="_blank" href="https://coding.net/u/silence1772" title="Coding"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="/603497448" title="QQ"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-编译器gcc与调试器gdb" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/13/编译器gcc与调试器gdb/" class="article-date">
+      <time datetime="2016-12-13T14:35:22.000Z" itemprop="datePublished">2016-12-13</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      编译器gcc与调试器gdb
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/学习/">学习</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="此文摘自《算法竞赛入门经典-第二版-》-刘汝佳"><a href="#此文摘自《算法竞赛入门经典-第二版-》-刘汝佳" class="headerlink" title="此文摘自《算法竞赛入门经典(第二版)》 刘汝佳"></a>此文摘自《算法竞赛入门经典(第二版)》 刘汝佳</h4><h2 id="A-3-编译器和调试器"><a href="#A-3-编译器和调试器" class="headerlink" title="A.3　编译器和调试器"></a>A.3　编译器和调试器</h2><p>既然编译器和调试器都是程序，执行方法和普通程序大致相同。在安装时，系统会自动<br>把编译器和调试器程序所在路径加到搜索路径中，因此在执行时不必像./gcc这样加上路径<br>名。</p>
+<h4 id="A-3-1-gcc的安装和测试"><a href="#A-3-1-gcc的安装和测试" class="headerlink" title="A.3.1　gcc的安装和测试"></a>A.3.1　gcc的安装和测试</h4><p>尽管在现场比赛中，编译器都已安装好，但如果平时练习，一般需要自己安装。如果使<br>用Linux，在安装操作系统时即可选择安装gcc、g++、binutils等包，但若要在Windows中使用<br>C/C++语言，需要手工安装编译器。<br>本书推荐使用MinGW环境下的gcc，它的好处是和Linux下的gcc一致性较好，而且是免费<br>的。可以到www.mingw.com中下载最新的安装包，然后在安装时选择g++编译器。<br>安装完毕后，在命令行中执行gcc命令。如果显示gcc: no input files，则安装成功；如果<br>提示不存在这个命令，可能是因为没有把gcc所在目录加到搜索路径中。可以双击控制面板<br>的“系统”图标，并在“高级”选项卡中设置环境变量。在“系统变量”中找到“PATH”(大小写无<br>所谓)，它就是可执行程序的搜索路径。请在它的最后加入MinGW安装路径的bin子目录，如<br>C:\MinGW\bin(在安装时记住MinGW的安装路径)，保存后重新启动命令行，gcc就应该可以正<br>常工作了。</p>
+<h4 id="A-3-2-常见编译选项"><a href="#A-3-2-常见编译选项" class="headerlink" title="A.3.2　常见编译选项"></a>A.3.2　常见编译选项</h4><p>先建立一个test.c，试试常见的编译选项。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line">main()</div><div class="line">&#123;</div><div class="line"><span class="keyword">int</span> a, b;</div><div class="line"><span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;a, &amp;b);</div><div class="line"><span class="keyword">int</span> c = a+b;</div><div class="line"><span class="built_in">printf</span>(<span class="string">"%d%d\n"</span>, c);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>编译一下，命令为gcc  test.c。程序没有输出，代表一切均好。检查目录(Windows下用<br>dir，Linux下用ls)，会发现多了一个a.exe(Windows)或a.out(Linux)，这就是程序的编译结果。<br>gcc test.c-o test命令会让编译出的可执行程序名为test.exe(Windows)或test(Linux)。这样，<br>就能用test(Windows)或./test(Linux)方式运行程序。<br>也许读者已经看出了上述代码中的一些问题，不过当程序更加复杂时，人眼就不一定能<br>快速找到错误了。在这样的情况下，编译选项能起作用：gcc -test.c -o test -Wall。这次，编<br>译器指出了3个警告：main函数没有返回类型、没有返回值、printf的格式字符串可能有问<br>题。还可以进一步用-ansi-pedantic，它会检查代码是否符合ANSI标准(-ansi只是判断是否和<br>ANSI冲突，而-pedantic更加严格)。它进一步指出了上述代码中的另外一个问题：ANSI C中<br>不允许临时声明变量，而必须在语句块的首部声明变量。<br>在C语言中，另一个常用的编译选项是-lm，它让编译器连接数学库，从而允许程序使用<br>math.h中的数学函数。C++编译器会自动连接数学库，但如果程序的扩展名是.c，且不连接数<br>学库，有时会出现意想不到的结果。<br>另一个有用的选项是-DDEBUG，它在编译时定义符号DEBUG（可以换成其他，如-<br>DLOCAL将定义符号LOCAL），这样，位于#ifdef DEBUG和#endif中间的语句会被编译。而<br>在通常情况下，这些语句将被编译器忽略（注意，不仅是不会执行，连编译都没有进行）。<br>可以用-O1、-O2和-O3对代码进行速度优化。一般情况下，直接编译出的程序比用-O1<br>编译出的程序慢，而后者比-O2慢。尽管理论上-O3编译出的程序更快，但由于某些优化可能<br>会误解程序员的意思，一般比赛中不推荐使用。另外，如果你的程序中有一些不确定因素<br>(如使用了未初始化的变量)，运行结果可能会和编译选项有关——用-O1和-O2编译出的程序<br>也许不仅是速度有差异，答案甚至都有可能不同！当然，这种情况出现的前提是程序有瑕<br>疵。如果是一个规范的程序，运行结果不会和优化方式有关。<br>既然编译选项可以影响程序的行为，在正规比赛中，组织方应提前公布编译选项。如果<br>没有公布，选手最好尽早询问。</p>
+<h4 id="A-3-3-gdb简介"><a href="#A-3-3-gdb简介" class="headerlink" title="A.3.3　gdb简介"></a>A.3.3　gdb简介</h4><p>gdb尽管只是一个文本界面的调试器，但功能十分强大。不管是Linux和Windows下的<br>MinGW，gcc和gdb都是最佳拍档。<br>gdb的使用方法很简单——用gcc编译成test.exe之后，执行gdb test.exe即可。不过，如果<br>要用gdb调试，编译时应加上-g选项，生成调试用的符号表。<br>接下来使用l命令，将看到部分源程序清单。如果用l 15，将会显示第15行（以及它前后<br>的若干行）。除此之外，还可以用函数名来定义，如l  main将显示main函数开头的附近10<br>行。如果不加参数执行l，将显示下10行；list  -将显示上10行。所有这些操作都可以用help<br>list命令来查看。gdb中的命令可以简写（例如list简写成l），大家可以多尝试（提示：试一<br>下命令的前若干个字母）。<br>运行程序的命令是r(run)，但会一直执行到程序结束。如何让它停下来呢？方法是用<br>b(break)命令设置断点。例如，b  main命令将在main函数的开始处设置一个断点，则用r命令<br>执行时会在这里停下来。如果想继续运行，请用c(continue)命令，而不是继续用r命令。和list<br>命令类似，b命令既可以指定行号，也可以在指定函数的首部停下来。笔者在调试很多程序<br>时都是以命令b main和r开头的。<br>如果希望逐条语句地执行程序，不停地用b和c命令太麻烦。gdb提供了一些更加方便的<br>指令，其中最常用的有两个：next(简写为n)和step(简写为s)。其作用都是执行当前行，区别<br>在于如果当前行涉及函数调用，则next是把它作为一个整体执行完毕，而step是进入函数内<br>部。尽管n和s都只有一个字母，但有时还是稍显繁琐。在gdb中，如果在提示符下直接按<br>Enter键，等价于再次执行上一条指令，因此如果需要连续执行s或者n，只需要第一次输入该<br>命令，然后直接连按Enter键即可。另外，和命令行一样，可以按上下箭头来使用历史记录。<br>另一个常用命令是until（简写为u），让程序执行到指定位置。例如，u 9就是执行到第9<br>行，u doit就是执行到doit函数的开头位置。<br>停下来以后便打印一些函数值，看看是否和想象的一致。用p(print)命令可以打印出一些<br>变量的值，而info  locals(可以简写为i  lo)可以显示所有局部变量。如果希望每次程序停下<br>来，则可以用display(简写为disp)命令。例如，display i+1就可以方便地读取i+1的值。它往往<br>和n、s和u等单步执行指令配合使用。如果需要列出所有display，可以用info display(简写为i<br>disp)；还可以删除或者临时禁止/恢复一些display，相应的命令为delete  display(d  disp)、<br>disable display(dis disp)和enable display(en disp)。类似地，也可以根据断点编号删除、禁止<br>和恢复断点，还可以用clear(cl)命令，像b命令一样根据行号或者函数名直接删除断点。<br>在多数情况下，灵活运用上述功能已经能高效地调试程序了。下面把涉及的命令列出，<br>供读者参考，如附表A-2所示。</p>
+<h4 id="附表A-2-gdb常见命令"><a href="#附表A-2-gdb常见命令" class="headerlink" title="附表A-2　gdb常见命令"></a>附表A-2　gdb常见命令</h4><p>简写 全称 备注<br>l list 显示指定行号或者指定函数附近的源代码<br>b break 在指定行号或者指定函数开头处设置断点。如b main<br>r run 运行程序，直到程序结束或者遇到断点而停下<br>c continue<br>在程序中断后继续执行程序，直到程序结束或者遇到断点而<br>停下。注意在程序开始执行前只能用r，不能用c<br>n next 执行一条语句。如果有函数调用，则把它作为一个整体<br>s step 执行一条语句。如果有函数调用，则进入函数内部<br>u until 执行到指定行号或者指定函数的开头<br>p print 显示变量或表达式的值<br>disp display<br>把一个表达式设置为display，当程序每次停下来时都会显示<br>其值<br>cl clear<br>取消断点，和b的格式相同。如果该位置有多个断点，将同时<br>取消<br>i info<br>显示各种信息。如i b显示所有断点，i disp显示display，而i lo<br>显示所有局部变量<br>如果对上述解释有疑问，可输入help以获得详尽的帮助信息。</p>
+<p>A.3.4　gdb的高级功能<br>gdb的功能远不止刚才所讲述的那些。尽管很多功能是专为系统级调试所设，但还有很<br>多功能也能为算法程序的调试带来很大方便。<br>首先是栈帧的相关命令，其中最常用的是bt，其他命令可以通过help stack来学习。接下<br>来是断点控制命令。commands(comm)命令可以指定在某个断点处停下来后所执行的gdb命<br>令，ignore(ig)命令可以让断点在前count次到达时都不停下来，而condition则可以给断点加一<br>个条件。例如，在下面的循环中：</p>
+<p>10 for(i = 0; i &lt; n; i++)<br>11 printf(“%d\n”, i);</p>
+<p>首先用b 11设置断点(假设编号为2)，然后用cond 2 i＝＝5让该断点仅当i＝5时有效。这<br>样的条件断点在进行细致的调试时往往很有用。<br>另外，gdb还支持一种特殊的断点——watchpoint。例如，watch a（简写为wa a）可以在<br>变量a修改时停下，并显示出修改前后的变量值，而awatch a（简写为aw a）则是在变量被读<br>写时都会停下来。类似地，rwatch a(rw a)则是在变量被读时停下。<br>最后需要说明的是，gdb中可以自由调用函数（不管是源程序中新定义的函数还是库函<br>数）。第一种方法是用call命令。例如，如果想给包含10个元素的数组a排序，可以像这样直<br>接调用STL中的排序函数call sort(a, a+10)。<br>遗憾的是，如果真的做过这个实验，会发现刚才所说完全是骗人的。gdb会显示不存在<br>函数sort。怎么会这样呢？如果学过宏和内联函数就会知道，很多看起来是函数的却不一定<br>真的是函数，或者说，不一定是调试器识别的函数。为了在gdb中调用sort，可以将它打包：</p>
+<p>void mysort(int<em>p, int</em>q)<br>{<br>sort(p, q);<br>}</p>
+<p>这样，就可以用call mysort(a, a+10)来给数组a排序了。print、condition和display命令都可<br>以像这样使用C/C++函数。例如，可以用p rand()来输出一个随机数，或是专门编写一个打印<br>二叉树的函数，然后在print或者display命令中使用它，还可以编写一个返回bool值的函数，<br>并作为断点的条件。<br>至此是不是觉得gdb很强大呢？注意，过分地依赖于gdb的调试功能让敏锐的直觉变得迟<br>钝。事实上，笔者建议读者尽量只使用A.3.3节提到的基本功能，甚至尽量不要使用gdb——<br>用输出中间变量的方法，加上直觉和经验来调试算法程序。如果是这样，编程速度和准确性<br>将大大提高。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/12/13/编译器gcc与调试器gdb/">编译器gcc与调试器gdb</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">吴泽伟</a></p>
+        <p><span>发布时间:</span>2016-12-13, 22:35:22</p>
+        <p><span>最后更新:</span>2017-04-04, 20:25:36</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/12/13/编译器gcc与调试器gdb/" title="编译器gcc与调试器gdb">http://silence1772.cn/2016/12/13/编译器gcc与调试器gdb/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://silence1772.cn/2016/12/13/编译器gcc与调试器gdb/　　作者: 吴泽伟" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/12/13/Linux下gcc使用命令/">
+                    Linux下gcc使用命令
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/12/21/vim代码补全插件YCM/">
+                    vim代码补全插件YCM
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"编译器gcc与调试器gdb　| 吴泽伟　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/12/13/编译器gcc与调试器gdb/" data-title="编译器gcc与调试器gdb" data-url="http://silence1772.cn/2016/12/13/编译器gcc与调试器gdb/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"silence1772"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/12/13/Linux下gcc使用命令/" title="上一篇: Linux下gcc使用命令">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/12/21/vim代码补全插件YCM/" title="下一篇: vim代码补全插件YCM">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/c-经典项目贪吃蛇小游戏详细教程/">c++经典项目贪吃蛇小游戏详细教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/02/hexo博客提交搜索引擎收录及统计-百度-google/">hexo博客提交搜索引擎收录及统计(百度+google)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/01/2017-我换新主题啦/">2017 我换新主题啦</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/HDU1284-钱币兑换-完全背包/">HDU1284 钱币兑换 完全背包</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/c-IO函数cstdio与stdio-h问题/">c++IO函数cstdio与stdio.h问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/结构体数组建立邻接表/">结构体数组建立邻接表</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/31/51nod-1737-配对/">51nod 1737 配对</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/30/HDU2441-筛素数-高精度除法/">HDU2441 筛素数+高精度除法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/30/HDU2087-KMP字符串匹配/">HDU2087 KMP字符串匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/HDU1018-阶乘的位数/">HDU1018 阶乘的位数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/HOJ1215-筛数法应用/">HOJ1215 筛数法应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/POJ2245-DFS求组合数/">POJ2245 DFS求组合数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/29/POJ1019-数学规律/">POJ1019 数学规律</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/KMPP求最小循环节/">KMPP求最小循环节</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/18001-Farmer-Cat-数学/">18001 Farmer Cat 数学</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/28/17996-Daily-Cool-Run-动态规划/">17996 Daily Cool Run 动态规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/24/腾讯云服务器相关问题/">腾讯云服务器相关问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/23/pair用法/">pair用法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/23/POJ1035-串/">POJ1035 串</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/华农数信学院人气王-站卢/">华农数信学院人气王-站卢</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/SCAU2016新生赛题目/">SCAU2016新生赛题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/21/vim代码补全插件YCM/">vim代码补全插件YCM</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/13/编译器gcc与调试器gdb/">编译器gcc与调试器gdb</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/13/Linux下gcc使用命令/">Linux下gcc使用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/12/vim基础学习/">vim基础学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/08/socket编程基础/">socket编程基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/07/拓扑排序与链式前向星详解/">拓扑排序与链式前向星详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/07/HDU1285-拓扑排序/">HDU1285 拓扑排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/hexo博客搬迁环境备忘/">hexo博客搬迁环境备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/POJ3026-BFS预处理-最小生成树/">POJ3026 BFS预处理+最小生成树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/06/POJ1258-Prim模板题/">POJ1258 Prim模板题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/05/Ubuntu-16-04与Win7双系统作死笔记/">Ubuntu 16.04与Win7双系统作死笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/03/SCAU18114-Ly-and-PostCards-未AC/">SCAU18114 Ly and PostCards(未AC)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/Kruskal算法并查集/">Kruskal算法并查集</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/POJ2485-Kruskal-并查集/">POJ2485 Kruskal+并查集</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/TCP-IP协议简单理解/">TCP/IP协议简单理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/最小生成树Prim算法理解/">最小生成树Prim算法理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/POJ1789-Prim算法求最小生成树/">POJ1789 Prim算法求最小生成树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/POJ2240-Flyod或Bellman-Ford算法/">POJ2240 Flyod或Bellman-Ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/Flody最短路算法/">Flody最短路算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/POJ1125-Flyod最短路/">POJ1125 Flyod最短路</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/30/POJ2253-Dijkstra变形/">POJ2253 Dijkstra变形</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/28/POJ1062-Dijkstra最短路径/">POJ1062 Dijkstra最短路径</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/28/POJ2531-DFS-剪枝/">POJ2531 DFS+剪枝</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/25/POJ2488-DFS骑士棋盘/">POJ2488 DFS骑士棋盘</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/24/Git使用教程/">Git使用教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/SCAU18091-Jasson请大家吃糖/">SCAU18091 Jasson请大家吃糖</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1159-LCS-滚动数组/">POJ1159 LCS+滚动数组</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1080-LCS最长公共子序列变形/">POJ1080 LCS最长公共子序列变形</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ2533-DP最长上升子序列LIS/">POJ2533 DP最长上升子序列LIS</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ1260-珍珠-DP/">POJ1260 珍珠 DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/POJ3176-数塔-简单DP/">POJ3176 数塔 简单DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/22/POJ1836-LIS最长上升子序列/">POJ1836 LIS最长上升子序列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/21/POJ3267-DP/">POJ3267 DP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/动态规划0-1背包问题/">动态规划0-1背包问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/KMP算法/">KMP算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/SCAU17973-Takio的滑板鞋/">SCAU17973 Takio的滑板鞋</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/SCAU17968-Takio与Blue的人生赢家之战/">SCAU17968 Takio与Blue的人生赢家之战</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/19/SCAU1081-字符串清除指定子串/">SCAU1081 字符串清除指定子串</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17967-大师姐唱K的固有结界/">SCAU17967 大师姐唱K的固有结界</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17984-FFF团的怒火/">SCAU17984 FFF团的怒火</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17972-Golden-gun的巧克力/">SCAU17972 Golden gun的巧克力</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17978 倒不了的塔/">SCAU17978 倒不了的塔</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/18/SCAU17983-jubea/">SCAU17983 jubea</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/17/最短路算法：Bellman-ford-Dijkstra-floyd-SPFA详解/">最短路算法：Bellman-ford Dijkstra floyd SPFA详解</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/16/POJ1860-Bellman-Ford算法逆用/">POJ1860 Bellman-Ford算法逆用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/16/POJ3259-Bellman-Ford算法/">POJ3259 Bellman-Ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/15/HDU1874-bellman-ford算法/">HDU1874 bellman-ford算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/14/POJ3083-DFS-BFS/">POJ3083 DFS+BFS</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/13/POJ2049-bfs-优先队列/">POJ2049 bfs+优先队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ3278-bfs入门题/">POJ3278 bfs入门题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ3295-堆栈/">POJ3295 堆栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/12/POJ1068-括号匹配/">POJ1068 括号匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/poj2506-递推+大数加法/">poj2506 递推+大数加法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/11/poj2586-贪心/">poj2586 贪心</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/POJ1328-贪心/">POJ 1328贪心</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/poj2965-bfs+枚举/">poj2965-bfs+枚举</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/09/poj1753-bfs+枚举/">poj1753-bfs+枚举</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/05/scau-8618-大牛之路II/">scau 8618 大牛之路II</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/04/scau-8613-锁/">scau 8613 锁</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 吴泽伟
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 7;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-89688633-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+             post: ".article-entry a[href], .copyright a[href]", 
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
